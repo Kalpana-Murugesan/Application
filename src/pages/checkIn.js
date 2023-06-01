@@ -3,3 +3,4 @@ export default function CheckIn(){
         <h1>Hello hai</h1>
     )
 }
+
