@@ -1,5 +1,5 @@
 export default function CheckIn(){
     return(
-        <h1>Hello</h1>
+        <h1>Hello hai</h1>
     )
 }
