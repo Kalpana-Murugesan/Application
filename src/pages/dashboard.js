@@ -1,9 +1,6 @@
-import { useNavigate, Navigate,Link } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { useState } from 'react'
-
-import './home.css'
-
-// import { useState } from 'react'
+import axios from 'axios';
 import NavBar from "../components/NavBar"; 
 import { logout, isAuthenticated } from "../services/Auth";
 
@@ -13,39 +10,53 @@ export default function DashboardPage(){
         logout();
         navigate('/login');
     }
+   
     
     const initialStateErrors = {
-        empId:{required:false}
+        EmpId:{required:false}
      };
      const [errors,setErrors] = useState(initialStateErrors)
 
-     const [setloading] = useState (false)
      const handleSubmit = (event)=>{
         event.preventDefault();
         let errors = initialStateErrors;
-        let loginerror = false;
-        if (inputs.empId === '') {
-           errors.empId.required =true;
-           loginerror = true;
+        if (userData.EmpId === '') {
+           errors.EmpId.required =true;
         }
         setErrors({...errors})
-        if(!loginerror){
-            setloading(true)
-        }
     }
-
-        const [inputs,setInputs] = useState({
-            empId:"",
-         })
-         const handleInput = (event)=>{
-            setInputs({...inputs,[event.target.name]:event.target.value})
-         }
-         
-         if (!isAuthenticated()){
+      
+     const [userData,setUserData] = useState({
+        EmpId:"",
+     });
+     const handleInput = (event)=>{
+        setUserData({...userData, [event.target.name]: event.target.value,
+    });
+};  
+   if(userData.EmpId !== '') {
+     axios.post('http://localhost:5000/api/users', userData)
+      .then((response) => {
+        console.log(response);
+        console.log('User logged:', response.data);
+        // Perform any necessary actions after successful user creation
+      })
+      .catch((error) => {
+        console.error('Error creating user:', error);
+        // Handle error scenario
+      });
+   }
+   const timestamp = (event) => {
+    var today = new Date()
+    var currentTime = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    console.log(today);
+    console.log(currentTime);
+}
+      if (!isAuthenticated()){
         // redirect page
         return <Navigate to="/login"/>
      }
-    
+     console.log(userData.EmpId);
+
     return(
         <div>
             <NavBar logoutUser={logoutUser}/>
@@ -58,18 +69,19 @@ export default function DashboardPage(){
                         <form onSubmit = {handleSubmit} className="login-form" action="">
                         <div className="form-group">
                             <label htmlFor="exampleInputEmail1" className="text-uppercase">Employee ID</label>
-                            <input type="empId"  className="form-control" onChange={handleInput}  name="empId"  id="" placeholder="Enter your Id" />
-                            {errors.empId.required?
+                            <input type="EmpId"  name="EmpId"  value ={userData.EmpId} onChange={handleInput} placeholder="Enter your Id" />
+                            {errors.EmpId.required?
                                     (<span className="text-danger" >
                                         Id is required.
                                     </span>):null
                                  } 
                                  <br/>
                                  <p align= 'center'>
-                                 <Link to ='/checkIn'><input type="submit" className="btn btn-Login"  value="Check In"/><br/></Link>
+                                 <button type="submit" onClick={timestamp}>submit</button>
+                                 {/* <input type="submit" className="btn btn-Login"  value="Check In"/><br/><Link to ='/checkIn'/>
                                  <br/>
-                                 <input type="submit" className="btn btn-Login"  value="Check Out"/><br/><Link to ='/register'></Link>
-                                 <br/> <input type="submit" className="btn btn-Login"  value="Details"/><Link to ='/register'></Link>
+                                 <input type="submit" className="btn btn-Login"  value="Check Out"/><br/><Link to ='/checkIn'></Link>
+                                 <br/> <input type="submit" className="btn btn-Login"  value="Details"/><Link to ='/register'></Link> */}
                                  </p>
                         </div>
                         </form>
@@ -80,3 +92,5 @@ export default function DashboardPage(){
                         </div>
     )         
  }
+
+

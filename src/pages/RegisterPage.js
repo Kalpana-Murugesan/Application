@@ -42,10 +42,13 @@ export default function RegisterPage() {
          RegisterApi(inputs).then((response)=>{
             userData(response.data.idToken);
          }).catch((err)=>{
-            if(err.response.data.error.message ==='EMAIL_EXISTS'){
+            if(err.response.data.error.message ==='EMAIL_EXISTS')
                setErrors({...errors,custom_error:'Already this email has been registered!'})
-            } else if(String(err.response.data.error.message).includes('WEAK_PASSWORD'))
+            else if(String(err.response.data.error.message).includes('WEAK_PASSWORD'))
                setErrors({...errors,custom_error:'Password should be at least 6 characters!'})
+             else if (err.response.status === 400)
+                setErrors({...errors,custom_error:'Invalid credentials!'})
+             
          }).finally(()=>{
             setloading(false)
          })
@@ -60,10 +63,14 @@ export default function RegisterPage() {
    const handleInput = (event)=>{
       setInputs({...inputs,[event.target.name]:event.target.value})
    }
-   if (isAuthenticated()){
-      // redirect page
-      return <Navigate to="/dashboard"/>
-   }
+//    if (isAuthenticated()){
+//       // redirect page
+//       return <Navigate to="/dashboard"/>
+//    }
+if (isAuthenticated()){
+    // redirect page
+    return <Navigate to="/dashboard"/>
+ }
     return (
         <div>
         <NavBar/>
