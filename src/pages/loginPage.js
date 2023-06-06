@@ -57,7 +57,7 @@ export default function LoginPage(){
      }
      if (isAuthenticated()){
         // redirect page
-        return <Navigate to="/dashboard"/>
+        return <Navigate to="/dashboard" />
      }
 
     return(

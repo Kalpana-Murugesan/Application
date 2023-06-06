@@ -44,6 +44,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/details', {
 
 const UserSchema = new mongoose.Schema({
   EmpId: String,
+  date: String,
+  Time : String,
 });
 
 const User = mongoose.model('User', UserSchema);
@@ -51,9 +53,9 @@ const User = mongoose.model('User', UserSchema);
 // Create a new user
 app.post('/api/users', async (req, res) => {
   try {
-    const { EmpId} = req.body;
+    const { EmpId, date ,Time} = req.body;
 
-    const user = new User({ EmpId });
+    const user = new User({ EmpId, date ,Time});
     await user.save();
 
     res.status(201).json(user);
