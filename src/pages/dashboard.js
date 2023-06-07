@@ -21,7 +21,7 @@ export default function DashboardPage() {
     const HandleSubmit = (event) => {
         var date = new Date();
         var dd = String(date.getDate()).padStart(2, '0');
-        var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var mm = String(date.getMonth() + 1).padStart(2, '0');
         var yyyy = date.getFullYear();
         date = mm + '-' + dd + '-' + yyyy;
         const currentTime = new Date()
@@ -47,14 +47,10 @@ export default function DashboardPage() {
                     console.error('Error creating user:', error);
                     // Handle error scenario
                 });
-                return data;
+            return data;
         }
-        
-       // window.location.reload();
-    //    if (!setIsSubmitted()) {
-    //     // redirect page
-    //     return <Navigate to="/details" />
-    //}
+
+        // window.location.reload();
     }
 
     const [userData, setUserData] = useState({
@@ -90,7 +86,7 @@ export default function DashboardPage() {
                                     }
                                     <br />
                                     <p align='center'>
-                                        <input type="submit" className="btn btn-Login" value="Submit"/><Link to = '/details'/>
+                                        <input type="submit" className="btn btn-Login" value="Submit" /><Link to='/details' />
                                         <br />
                                     </p>
                                 </div>
