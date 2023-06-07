@@ -1,28 +1,4 @@
-/*
-const express = require('express')
-const app = express()
-const mongoose = require('mongoose');
-mongoose.set('strictQuery',false);
-app.listen(3000,function check(err)
-{
-    if(err)
-    console.log("error");
-    else
-    console.log("started");
-});
-mongoose.connect("mongodb://127.0.0.1:27017/details",{useNewUrlParser: true, useUnifiedTopology: true},
-function checkDb(error)
-{
-    if(error)
-    {
-        console.log("Error Connecting To DB");
-    }
-    else{
-        console.log("Successfully Connected to DB");
-    }
 
-});
-*/
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -64,6 +40,14 @@ app.post('/api/users', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+app.get('/getAllUser', async (req, res)=> {
+  try {
+    const allUser = await User.find({});
+    res.send({status: 'ok', data: allUser});
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
