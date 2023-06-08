@@ -16,7 +16,7 @@ const DataTable = () => {
   }, [])
 
 
-  const columns = ["EmpId", "Time", "date",]; // Define your table columns    
+  const columns = ["EmpId", "Time", "date", "CheckIn", "CheckOut", "TotalHours" ]; // Define your table columns    
 
   const options = {
     responsive: 'standard',

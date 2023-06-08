@@ -28,8 +28,16 @@ export default function DashboardPage() {
         var Time = currentTime.getHours() + ':' + currentTime.getMinutes() + ':' + currentTime.getSeconds();
         console.log(Date);
         event.preventDefault();
+        /*
+        let id = userData.EmpId
+        if(id === id){
+        }
+        */
+        let CheckIn = '';
+        let CheckOut = '';
+        let TotalHours = '';
         let errors = initialStateErrors;
-        const data = { ...userData, date, Time }
+        const data = { ...userData, date, Time, CheckIn, CheckOut, TotalHours }
         if (userData.EmpId === '') {
             errors.EmpId.required = true;
         }
@@ -94,12 +102,9 @@ export default function DashboardPage() {
                             {isSubmitted ? (<p>Data submitted successfully!</p>) : null
                             }
                         </div>
-
                     </div>
                 </div>
             </section>
         </div>
     )
 }
-
-

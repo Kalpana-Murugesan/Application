@@ -22,6 +22,9 @@ const UserSchema = new mongoose.Schema({
   EmpId: String,
   date: String,
   Time : String,
+  CheckIn: Number,
+  CheckOut: Number,
+  TotalHours: Number
 });
 
 const User = mongoose.model('User', UserSchema);
@@ -29,9 +32,9 @@ const User = mongoose.model('User', UserSchema);
 // Create a new user
 app.post('/api/users', async (req, res) => {
   try {
-    const { EmpId, date ,Time} = req.body;
+    const { EmpId, date, Time, CheckIn, CheckOut, TotalHours } = req.body;
 
-    const user = new User({ EmpId, date ,Time});
+    const user = new User({ EmpId, date, Time, CheckIn, CheckOut, TotalHours});
     await user.save();
 
     res.status(201).json(user);
@@ -40,6 +43,7 @@ app.post('/api/users', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+// api to get user details
 app.get('/getAllUser', async (req, res)=> {
   try {
     const allUser = await User.find({});
