@@ -4,6 +4,7 @@ import axios from 'axios';
 import NavBar from "../components/NavBar";
 import { logout, isAuthenticated } from "../services/Auth";
 
+
 export default function DashboardPage() {
     const navigate = useNavigate();
     const logoutUser = () => {
@@ -15,6 +16,8 @@ export default function DashboardPage() {
         EmpId: { required: false }
     };
     const [errors, setErrors] = useState(initialStateErrors)
+
+    
     // success message
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -33,11 +36,8 @@ export default function DashboardPage() {
         if(id === id){
         }
         */
-        let CheckIn = '';
-        let CheckOut = '';
-        let TotalHours = '';
         let errors = initialStateErrors;
-        const data = { ...userData, date, Time, CheckIn, CheckOut, TotalHours }
+        const data = { ...userData, date, Time, }
         if (userData.EmpId === '') {
             errors.EmpId.required = true;
         }
