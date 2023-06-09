@@ -1,8 +1,9 @@
 import { useNavigate, Navigate, Link } from "react-router-dom";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios';
 import NavBar from "../components/NavBar";
 import { logout, isAuthenticated } from "../services/Auth";
+import Details from "./database";
 
 
 export default function DashboardPage() {
@@ -26,7 +27,7 @@ export default function DashboardPage() {
         var dd = String(date.getDate()).padStart(2, '0');
         var mm = String(date.getMonth() + 1).padStart(2, '0');
         var yyyy = date.getFullYear();
-        date = mm + '-' + dd + '-' + yyyy;
+        date = dd + '-' + mm + '-' + yyyy;
         const currentTime = new Date()
         var Time = currentTime.getHours() + ':' + currentTime.getMinutes() + ':' + currentTime.getSeconds();
         console.log(Date);

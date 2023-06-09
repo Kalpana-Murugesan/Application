@@ -50,19 +50,19 @@ app.get('/getAllUser', async (req, res)=> {
     console.log(error);
   }
 })
-
+// Admin DB
 const AdminSchema = new mongoose.Schema({
   EmpId: String,
 });
 
-const admin = mongoose.model('admin', AdminSchema);
+const Admin = mongoose.model('admin', AdminSchema);
 
 // Create a new user
-app.post('/api/users', async (req, res) => {
+app.post('/api/admin', async (req, res) => {
   try {
     const { EmpId } = req.body;
 
-    const user = new admin({ EmpId });
+    const user = new Admin({ EmpId });
     await user.save();
 
     res.status(201).json(user);
@@ -71,6 +71,15 @@ app.post('/api/users', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+app.get('/getDetails', async (req, res)=> {
+  try {
+    const alldetail = await Admin.find({});
+    res.send({status: 'ok', data: alldetail});
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
