@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './AdminRegisterPage.css'
+import '../pages/RegisterPage.css'
 import { RegisterApi } from '../services/api';
 import { userData } from '../services/storage';
 import { isAuthenticated } from '../services/Auth';
@@ -78,7 +78,7 @@ if (isAuthenticated()){
             <div className="container">
                 <div className="row ">
                     <div className="col register-sec">
-                        <h2 className="text-center">Register Now</h2>
+                        <h2 className="text-center">Admin Register</h2>
                         <form onSubmit = {handleSubmit} className="register-form" action="" >
                             <div className="form-group">
                                 <label htmlFor="exampleInputEmail1" className="text-uppercase">Name</label>
@@ -124,7 +124,7 @@ if (isAuthenticated()){
                             </div>
                             <div className="clearfix"></div>
                             <div className="form-group">
-                                Already have account ? Please <Link to ='/login'>Login</Link>
+                                Already have account ? Please <Link to ='/adminlogin'>Login</Link>
                             </div>
                         </form>
                     </div>

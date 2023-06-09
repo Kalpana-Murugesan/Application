@@ -9,7 +9,7 @@ export default function Adminportal () {
     const navigate = useNavigate();
     const logoutUser = () => {
         logout();
-        navigate('/login');
+        navigate('/adminlogin');
     }
     
 }

@@ -2,15 +2,15 @@ import React from 'react';
 import NavBar from "../components/NavBar";
 import logo from '../img/Logo.png'; // gives image path
 
-
-
 export default function Home() {
     return (
-        <div className="home">
+        <div>
             <NavBar />
-            <p align = 'center'>
-            <img src={logo} alt="Sensiple logo" />
-            </p>  
+            <div className="home">
+                <p align='center'>
+                    <img src={logo} alt="Sensiple logo" />
+                </p>
+            </div>
         </div>
     )
 }

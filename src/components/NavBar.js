@@ -14,9 +14,11 @@ export default function NavBar(props){
                 {!isAuthenticated()?<li><Link className="nav-link" to='/login' >Login</Link></li>:null}
                 {!isAuthenticated()?<li className="nav-item"><Link className="nav-link" to='/adminregister' >AdminPage</Link></li>:null}
                 {isAuthenticated()?<li className="nav-item"><Link className="nav-link" to='/dashboard' >Dashboard</Link></li>:null}
+                {isAuthenticated()?<li className="nav-item"><Link className="nav-link" to='/details' >Details</Link></li>:null}
                 {isAuthenticated()?<li><a className="nav-link" onClick={props.logoutUser} style={{cursor:"pointer"}}  >Logout</a></li>:null}
             </ul>
         </div>
     </nav>
     )
 }
+

@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema({
   Time : String
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('users', UserSchema);
 
 // Create a new user
 app.post('/api/users', async (req, res) => {
@@ -50,6 +50,27 @@ app.get('/getAllUser', async (req, res)=> {
     console.log(error);
   }
 })
+
+const AdminSchema = new mongoose.Schema({
+  EmpId: String,
+});
+
+const admin = mongoose.model('admin', AdminSchema);
+
+// Create a new user
+app.post('/api/users', async (req, res) => {
+  try {
+    const { EmpId } = req.body;
+
+    const user = new admin({ EmpId });
+    await user.save();
+
+    res.status(201).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
