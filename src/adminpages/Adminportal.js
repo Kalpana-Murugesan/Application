@@ -1,16 +1,15 @@
-import React from 'react';
-import NavBar from '../components/NavBar';
-
-const Adminportal = () => {
-    return (
-
-        <div>
-            <NavBar/>
-            <input type="submit" className="btn btn-login float-right" value="Employee Details" />
-            <input type="submit" className="btn btn-login float-right" value="Employee Attendance" />
-        </div>
+import { useNavigate, Navigate, Link } from "react-router-dom";
+import { useState } from 'react'
+import axios from 'axios';
+import NavBar from "../components/NavBar";
+import { logout, isAuthenticated } from "../services/Auth";
 
 
-    );
-};
-export default Adminportal;
+export default function Adminportal () {
+    const navigate = useNavigate();
+    const logoutUser = () => {
+        logout();
+        navigate('/login');
+    }
+    
+}
