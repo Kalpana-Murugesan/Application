@@ -1,9 +1,8 @@
 import { useNavigate, Navigate, Link } from "react-router-dom";
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import axios from 'axios';
 import NavBar from "../components/NavBar";
 import { logout, isAuthenticated } from "../services/Auth";
-import Details from "./database";
 
 
 export default function DashboardPage() {
@@ -32,11 +31,7 @@ export default function DashboardPage() {
         var Time = currentTime.getHours() + ':' + currentTime.getMinutes() + ':' + currentTime.getSeconds();
         console.log(Date);
         event.preventDefault();
-        /*
-        let id = userData.EmpId
-        if(id === id){
-        }
-        */
+        
         let errors = initialStateErrors;
         const data = { ...userData, date, Time, }
         if (userData.EmpId === '') {
