@@ -20,7 +20,7 @@ export default function DashboardPage() {
     
     // success message
     const [isSubmitted, setIsSubmitted] = useState(false);
-
+    
     const HandleSubmit = (event) => {
         var date = new Date();
         var dd = String(date.getDate()).padStart(2, '0');
@@ -49,16 +49,17 @@ export default function DashboardPage() {
                     setIsSubmitted(true);
                     console.log(response);
                     console.log('User logged:', response.data);
+                    window.location.reload();
                     // Perform any necessary actions after successful user creation
                 })
                 .catch((error) => {
                     console.error('Error creating user:', error);
                     // Handle error scenario
                 });
-            return data;
+            // return data;
         }
-
         // window.location.reload();
+        
     }
 
     const [userData, setUserData] = useState({
@@ -83,10 +84,10 @@ export default function DashboardPage() {
                     <div className="row ">
                         <div className="col login-sec">
                             <h2 className="text-center">Sensiple Employee Portal</h2>
-                            <form onSubmit={HandleSubmit} className="login-form" action="">
+                            <form onSubmit={HandleSubmit} className="login-form" action="" id="create-Emp-form">
                                 <div className="form-group">
                                     <label htmlFor="exampleInputEmail1" className="text-uppercase">Employee ID</label>
-                                    <input type="text" name="EmpId" className="form-control" value={userData.EmpId} onChange={handleInputchange} placeholder="Enter your Id" />
+                                    <input autoFocus type="text" name="EmpId" id="EmpId" className="form-control" value={userData.EmpId} onChange={handleInputchange} placeholder="Enter your Id" required="required" />
                                     {errors.EmpId.required ?
                                         (<span className="text-danger" >
                                             Id is required.
@@ -99,8 +100,8 @@ export default function DashboardPage() {
                                     </p>
                                 </div>
                             </form>
-                            {isSubmitted ? (<p>Data submitted successfully!</p>) : null
-                            }
+                            {isSubmitted ? (<p>Data submitted successfully!</p>) : null }
+                            
                         </div>
                     </div>
                 </div>
