@@ -3,7 +3,8 @@ import { useState } from 'react'
 import axios from 'axios';
 import NavBar from "../components/NavBar";
 import { logout, isAuthenticated } from "../services/Auth";
-
+const CryptoJS = require('crypto-js');
+// const writeFileP = require('write-file-p');
 
 export default function DashboardPage() {
     const navigate = useNavigate();
@@ -17,45 +18,63 @@ export default function DashboardPage() {
     };
     const [errors, setErrors] = useState(initialStateErrors)
 
-    
+
     // success message
     const [isSubmitted, setIsSubmitted] = useState(false);
-    
+
     const HandleSubmit = (event) => {
-        var date = new Date();
-        var dd = String(date.getDate()).padStart(2, '0');
-        var mm = String(date.getMonth() + 1).padStart(2, '0');
-        var yyyy = date.getFullYear();
-        date = dd + '-' + mm + '-' + yyyy;
-        const currentTime = new Date()
-        var Time = currentTime.getHours() + ':' + currentTime.getMinutes() + ':' + currentTime.getSeconds();
-        console.log(Date);
+        // var date = new Date();
+        // var dd = String(date.getDate()).padStart(2, '0');
+        // var mm = String(date.getMonth() + 1).padStart(2, '0');
+        // var yyyy = date.getFullYear();
+        // date = dd + '-' + mm + '-' + yyyy;
+        // const currentTime = new Date()
+        // var Time = currentTime.getHours() + ':' + currentTime.getMinutes() + ':' + currentTime.getSeconds();
+        // console.log(Date);
         event.preventDefault();
-        
+        // Encrypt data
         let errors = initialStateErrors;
-        const data = { ...userData, date, Time, }
+        //const data = userData.EmpId;
         if (userData.EmpId === '') {
             errors.EmpId.required = true;
         }
         setErrors({ ...errors })
         if (userData.EmpId !== '') {
+            // Encryptdata
+            var ciphertext = CryptoJS.AES.encrypt(JSON.stringify({"employee_id" : userData.EmpId}), 'd6F3Efeq').toString();
+            console.log(ciphertext);
+
+            //decryptedData
+            // var bytes = CryptoJS.AES.decrypt(ciphertext, 'my-secret-key@123');
+            // var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+            // console.log(decryptedData);
+
             // Db Hit
-            axios.post('http://localhost:5000/api/users', data)
+            const reqData = {
+                "request_data" : ciphertext
+            };
+            // axios.post('http://localhost:5000/api/users', reqData)
+            axios.post('https://us-central1-gcpcicd-383507.cloudfunctions.net/timesheet_management/api/employee_checkin', reqData)
                 .then((response) => {
                     setIsSubmitted(true);
                     console.log(response);
                     console.log('User logged:', response.data);
+                    console.log(response.data.message);
                     window.location.reload();
                     // Perform any necessary actions after successful user creation
                 })
                 .catch((error) => {
                     console.error('Error creating user:', error);
+                    // Write a text file
+                    // writeFileP(`${__dirname}/src/Errors/output.txt`, "Hello World", (error, data) => {
+                    // console.log(error || data);
+                // });
+
                     // Handle error scenario
                 });
             // return data;
         }
-        // window.location.reload();
-        
+
     }
 
     const [userData, setUserData] = useState({
@@ -90,14 +109,13 @@ export default function DashboardPage() {
                                         </span>) : null
                                     }
                                     <br />
-                                    <p align='center'>
+                                    {/* <p align='center'>
                                         <input type="submit" className="btn btn-Login" value="Submit" /><Link to='/details' />
                                         <br />
-                                    </p>
+                                    </p> */}
                                 </div>
                             </form>
-                            {isSubmitted ? (<p>Data submitted successfully!</p>) : null }
-                            
+                            {isSubmitted ? (<p>Data submitted successfully!</p>) : null}
                         </div>
                     </div>
                 </div>

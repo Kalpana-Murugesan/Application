@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-
+// PORT Set
 const app = express();
 const PORT = 5000;
 
@@ -22,7 +22,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/details', {
 const UserSchema = new mongoose.Schema({
   EmpId: String,
   date: String,
-  Time : String
+  Time : String,
+  Name: String,
+  Reportingto: String
 });
 
 const User = mongoose.model('users', UserSchema);
@@ -30,9 +32,9 @@ const User = mongoose.model('users', UserSchema);
 // Create a new user
 app.post('/api/users', async (req, res) => {
   try {
-    const { EmpId, date, Time,} = req.body;
+    const { EmpId} = req.body;
 
-    const user = new User({ EmpId, date, Time,});
+    const user = new User({ EmpId});
     await user.save();
 
     res.status(201).json(user);
@@ -53,6 +55,8 @@ app.get('/getAllUser', async (req, res)=> {
 // Admin DB
 const AdminSchema = new mongoose.Schema({
   EmpId: String,
+  Name: String,
+  
 });
 
 const Admin = mongoose.model('admin', AdminSchema);
